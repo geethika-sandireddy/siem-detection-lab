@@ -1,0 +1,10 @@
+# Illustrative excerpt (sanitized/synthetic), not real credentials or IPs from any system.
+Aug  4 02:14:01 victim sshd[1922]: Failed password for labadmin from 192.168.56.30 port 51422 ssh2
+Aug  4 02:14:03 victim sshd[1923]: Failed password for labadmin from 192.168.56.30 port 51423 ssh2
+Aug  4 02:14:05 victim sshd[1924]: Failed password for labadmin from 192.168.56.30 port 51424 ssh2
+Aug  4 02:14:07 victim sshd[1925]: Failed password for labadmin from 192.168.56.30 port 51425 ssh2
+Aug  4 02:14:09 victim sshd[1926]: Failed password for labadmin from 192.168.56.30 port 51426 ssh2
+Aug  4 02:14:11 victim sshd[1927]: Failed password for labadmin from 192.168.56.30 port 51427 ssh2
+Aug  4 02:14:13 victim sshd[1928]: Failed password for labadmin from 192.168.56.30 port 51428 ssh2
+Aug  4 02:14:15 victim sshd[1929]: Failed password for labadmin from 192.168.56.30 port 51429 ssh2
+Aug  4 02:14:17 victim sshd[1930]: Accepted password for labadmin from 192.168.56.30 port 51430 ssh2
