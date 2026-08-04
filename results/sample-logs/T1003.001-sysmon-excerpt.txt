@@ -1,0 +1,6 @@
+# Illustrative excerpt (sanitized/synthetic).
+EventID: 10
+SourceImage: C:\Windows\System32\rundll32.exe
+TargetImage: C:\Windows\System32\lsass.exe
+GrantedAccess: 0x1410
+CallTrace: C:\Windows\SYSTEM32\ntdll.dll+9d8f4|C:\Windows\System32\KERNELBASE.dll+2d4a3|C:\Windows\System32\comsvcs.dll+3d1a
