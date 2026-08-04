@@ -1,0 +1,16 @@
+<!--
+  Cross-technique correlation rule.
+  Raises severity when 2+ of the lab's individual technique rules fire on
+  the same agent within a short window — approximates how a real SOC
+  would treat a chained intrusion rather than 5 isolated alerts.
+-->
+<group name="local,correlation,">
+
+  <rule id="100060" level="15" frequency="2" timeframe="600">
+    <if_matched_group>local</if_matched_group>
+    <same_agent />
+    <different_id />
+    <description>Multiple distinct technique rules fired on the same host within 10 minutes — possible attack chain.</description>
+  </rule>
+
+</group>
