@@ -20,3 +20,26 @@ Stand up a small, realistic SOC pipeline end-to-end:
 
 The point isn't the tools — it's the detection engineering loop:
 **simulate → observe → write rule → test → tune → document.**
+
+## Repo structure
+
+```
+siem-detection-lab/
+├── docs/            build log, setup guides, MITRE mapping, limitations
+├── rules/           Wazuh detection rules (XML), one per technique
+├── results/         per-technique test write-ups: what fired, what didn't
+├── scripts/         helper scripts to run the atomics / simulations
+└── screenshots/      evidence captures (dashboard alerts, raw events)
+```
+
+## Techniques covered
+
+| ATT&CK ID | Technique |
+|---|---|
+| T1110.001 | Brute Force: Password Guessing |
+| T1059.001 | PowerShell |
+| T1053.005 | Scheduled Task |
+| T1003.001 | OS Credential Dumping: LSASS Memory |
+| T1021.001 | Remote Desktop Protocol |
+
+Full results table with pass/fail detail: [docs/05-detection-summary-table.md](docs/05-detection-summary-table.md)
