@@ -1,0 +1,6 @@
+# Illustrative excerpt (sanitized/synthetic).
+EventID: 4624
+LogonType: 10
+TargetUserName: labuser
+IpAddress: 192.168.56.30
+AuthenticationPackageName: Negotiate
