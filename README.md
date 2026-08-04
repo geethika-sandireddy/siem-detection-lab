@@ -7,6 +7,14 @@ mapped to **MITRE ATT&CK**.
 
 > Status: 🚧 in progress — see [docs/](docs/) for build log.
 
+## Contents
+
+- [Goal](#goal)
+- [Repo structure](#repo-structure)
+- [Techniques covered](#techniques-covered)
+- [Quick start](#quick-start)
+- [Honest limitations](#honest-limitations)
+
 ## Goal
 
 Stand up a small, realistic SOC pipeline end-to-end:
