@@ -43,3 +43,21 @@ siem-detection-lab/
 | T1021.001 | Remote Desktop Protocol |
 
 Full results table with pass/fail detail: [docs/05-detection-summary-table.md](docs/05-detection-summary-table.md)
+
+## Quick start
+
+1. [Set up the Wazuh manager](docs/01-environment-setup.md)
+2. [Set up the victim VM(s)](docs/02-victim-vm-setup.md)
+3. [Install Atomic Red Team on the victim](docs/03-atomic-red-team-setup.md)
+4. Run an atomic (`scripts/run-atomics.ps1` or `scripts/run-brute-force.sh`)
+5. Drop the matching rule from `rules/` into your Wazuh manager's
+   `local_rules.xml` and restart the manager
+6. Confirm the alert in the Wazuh Dashboard
+
+## Honest limitations
+
+This is a lab, not a production SOC. See
+[docs/06-limitations.md](docs/06-limitations.md) for what these rules do
+*not* catch — slow/low brute force, LOLBin evasion of command-line rules,
+missing audit-policy prerequisites, no network-layer detection, and no
+cross-technique correlation.
