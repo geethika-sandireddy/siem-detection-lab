@@ -50,3 +50,10 @@ would correlate *across* these five rules, not just alert on each in
 isolation. This lab treats them as independent detections; a natural next
 step (not built here) would be a correlation rule that raises severity when
 two or more of these fire on the same host within a short window.
+
+---
+
+**Update:** a first-pass correlation rule addressing limitation #6 was
+added at [`rules/correlation/chained-attack.xml`](../rules/correlation/chained-attack.xml).
+It hasn't been tested against a full multi-stage atomic chain yet (only the
+five isolated techniques above) — noted here rather than marked complete.
