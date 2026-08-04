@@ -1,0 +1,30 @@
+<!--
+  T1059.001 - Command and Scripting Interpreter: PowerShell
+  Wazuh local rule. Assumes Sysmon events are being ingested via
+  the eventchannel <localfile> configured in docs/02-victim-vm-setup.md.
+-->
+<group name="local,windows,powershell,">
+
+  <!-- Layer 1: cheap command-line filter on process creation -->
+  <rule id="100020" level="8">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.image" type="pcre2">(?i)powershell\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(-enc|-e |-EncodedCommand|-nop|-noni|-w hidden|-windowstyle hidden)</field>
+    <description>Suspicious PowerShell flags on the command line (encoded/obfuscated/hidden-window execution).</description>
+    <mitre>
+      <id>T1059.001</id>
+    </mitre>
+  </rule>
+
+  <!-- Layer 2: higher-confidence, decoded script block content -->
+  <rule id="100021" level="12">
+    <if_group>windows</if_group>
+    <field name="win.system.eventID">^4104$</field>
+    <field name="win.eventdata.scriptBlockText" type="pcre2">(?i)(downloadstring|downloadfile|invoke-expression|iex |-nop |frombase64string)</field>
+    <description>PowerShell Script Block Logging captured a decoded script with downloader/obfuscation primitives.</description>
+    <mitre>
+      <id>T1059.001</id>
+    </mitre>
+  </rule>
+
+</group>
