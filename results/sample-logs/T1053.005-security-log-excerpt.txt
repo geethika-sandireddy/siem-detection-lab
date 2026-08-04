@@ -1,0 +1,5 @@
+# Illustrative excerpt (sanitized/synthetic).
+EventID: 4698
+TaskName: \ARTScheduledTask
+TaskContent: <Exec><Command>C:\Windows\System32\cmd.exe</Command><Arguments>/c whoami</Arguments></Exec>
+SubjectUserName: labuser
