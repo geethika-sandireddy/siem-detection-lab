@@ -34,3 +34,35 @@ sudo systemctl enable --now wazuh-agent
 ```
 
 Confirm the agent shows **Active** in Wazuh Dashboard → Agents.
+
+## Sysmon on the Windows victim
+
+Windows Event Logs alone are too coarse for good detections (no command
+line for process creation by default, no parent/child process chain). We
+install **Sysmon** with SwiftOnSecurity's community config, which is the
+de-facto starting baseline for detection labs.
+
+```powershell
+Invoke-WebRequest -Uri https://download.sysinternals.com/files/Sysmon.zip -OutFile Sysmon.zip
+Expand-Archive Sysmon.zip -DestinationPath Sysmon
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml -OutFile sysmonconfig.xml
+.\Sysmon\Sysmon64.exe -accepteula -i sysmonconfig.xml
+```
+
+Then point the Wazuh agent's `ossec.conf` at the Sysmon event channel:
+
+```xml
+<localfile>
+  <location>Microsoft-Windows-Sysmon/Operational</location>
+  <log_format>eventchannel</log_format>
+</localfile>
+```
+
+Also enable **PowerShell Script Block Logging** via Group Policy /
+registry, since it's the single highest-value log source for the
+PowerShell-abuse technique below:
+
+```
+HKLM\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+  EnableScriptBlockLogging = 1
+```
