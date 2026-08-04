@@ -1,0 +1,8 @@
+<!--
+  Excerpt from sysmonconfig.xml relevant to the T1003.001 rule.
+  Ensures ProcessAccess (Event ID 10) events targeting lsass.exe are logged.
+  Full config: SwiftOnSecurity/sysmon-config on GitHub.
+-->
+<ProcessAccess onmatch="include">
+  <TargetImage condition="end with">lsass.exe</TargetImage>
+</ProcessAccess>
