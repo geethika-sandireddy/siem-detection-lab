@@ -1,0 +1,16 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs / captured data (may contain lab-generated sensitive-looking data)
+*.log
+/results/raw/
+
+# VM / Vagrant artifacts
+.vagrant/
+*.ova
+*.vdi
+
+# Editor
+.vscode/
+*.swp
