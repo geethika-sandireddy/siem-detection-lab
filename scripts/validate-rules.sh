@@ -12,7 +12,7 @@ set -euo pipefail
 fail=0
 
 echo "== Individual rule files =="
-for f in rules/*.xml rules/correlation/*.xml; do
+for f in $(find rules -name '*.xml' ! -name 'local_rules.xml'); do
   if xmllint --noout "$f" 2>/tmp/err; then
     echo "OK   $f"
   else
