@@ -17,3 +17,8 @@ No — see [06-limitations.md](06-limitations.md). They're a solid starting
 point and demonstrate the detection-engineering workflow, but would need
 broader allow-listing, testing against a noisier real environment, and
 review against current evasion techniques before shipping.
+
+**Q: Why 100000+ for custom rule IDs?**
+Wazuh reserves that range for local/user-defined rules so they never
+collide with IDs in the shipped default ruleset — see
+[16-detection-as-code.md](16-detection-as-code.md).
