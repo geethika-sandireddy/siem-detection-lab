@@ -1,5 +1,7 @@
 # T1110.001 — Brute Force: Password Guessing
 
+> ⚠️ **Expected result, not yet verified live.** Written from how this rule and log source actually behave; not yet observed on a running VM. Update this once executed per docs/17-deploying-this-repo.md.
+
 **Victim:** Linux (Ubuntu), SSH exposed on host-only network only.
 
 ## Atomic test used
