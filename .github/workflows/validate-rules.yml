@@ -1,0 +1,19 @@
+name: Validate detection rules
+
+on:
+  push:
+    paths:
+      - "rules/**"
+  pull_request:
+    paths:
+      - "rules/**"
+
+jobs:
+  xml-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install libxml2-utils
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+      - name: Run rule validation script
+        run: bash scripts/validate-rules.sh
