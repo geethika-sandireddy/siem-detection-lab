@@ -1,0 +1,169 @@
+<!--
+  local_rules.xml — merged, deployment-ready ruleset for this lab.
+
+  Combines every individual rule file under rules/ into the single file
+  Wazuh actually loads: /var/ossec/etc/rules/local_rules.xml
+
+  Source files (kept separate for readability/review):
+    - T1110-brute-force.xml
+    - T1059.001-powershell.xml
+    - T1053.005-scheduled-task.xml
+    - T1003.001-lsass-dump.xml
+    - T1021.001-rdp.xml
+    - correlation/chained-attack.xml
+
+  install/install-wazuh-manager.sh copies this exact file into place.
+-->
+
+<group name="local,ssh,brute_force,">
+
+  <rule id="100010" level="10" frequency="8" timeframe="120">
+    <if_matched_sid>5710</if_matched_sid>
+    <same_source_ip />
+    <description>SSH brute force attempt: 8+ failed logins from the same source IP within 2 minutes.</description>
+    <mitre>
+      <id>T1110.001</id>
+    </mitre>
+  </rule>
+
+  <rule id="100011" level="12">
+    <if_sid>100010</if_sid>
+    <if_matched_sid>5715</if_matched_sid>
+    <description>Possible successful brute force: accepted SSH login shortly after a burst of failures from the same source IP.</description>
+    <mitre>
+      <id>T1110.001</id>
+    </mitre>
+  </rule>
+
+</group>
+
+<group name="local,windows,powershell,">
+
+  <rule id="100020" level="8">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.image" type="pcre2">(?i)powershell\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(-enc|-e |-EncodedCommand|-nop|-noni|-w hidden|-windowstyle hidden)</field>
+    <description>Suspicious PowerShell flags on the command line (encoded/obfuscated/hidden-window execution).</description>
+    <mitre>
+      <id>T1059.001</id>
+    </mitre>
+  </rule>
+
+  <rule id="100021" level="12">
+    <if_group>windows</if_group>
+    <field name="win.system.eventID">^4104$</field>
+    <field name="win.eventdata.scriptBlockText" type="pcre2">(?i)(downloadstring|downloadfile|invoke-expression|iex |-nop |frombase64string)</field>
+    <description>PowerShell Script Block Logging captured a decoded script with downloader/obfuscation primitives.</description>
+    <mitre>
+      <id>T1059.001</id>
+    </mitre>
+  </rule>
+
+</group>
+
+<group name="local,windows,persistence,">
+
+  <rule id="100030" level="10">
+    <if_group>windows</if_group>
+    <field name="win.system.eventID">^4698$</field>
+    <description>A new scheduled task was created (Event 4698).</description>
+    <mitre>
+      <id>T1053.005</id>
+    </mitre>
+  </rule>
+
+  <rule id="100031" level="9">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.image" type="pcre2">(?i)schtasks\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)/create</field>
+    <description>schtasks.exe invoked with /create — new scheduled task via command line.</description>
+    <mitre>
+      <id>T1053.005</id>
+    </mitre>
+  </rule>
+
+  <rule id="100032" level="13">
+    <if_sid>100031</if_sid>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(\\appdata\\|\\temp\\|\\users\\public\\)</field>
+    <description>Scheduled task created pointing at a user-writable path (common persistence pattern).</description>
+    <mitre>
+      <id>T1053.005</id>
+    </mitre>
+  </rule>
+
+</group>
+
+<group name="local,windows,credential_access,">
+
+  <rule id="100040" level="10">
+    <if_group>windows</if_group>
+    <field name="win.system.eventID">^10$</field>
+    <field name="win.eventdata.targetImage" type="pcre2">(?i)lsass\.exe$</field>
+    <field name="win.eventdata.grantedAccess" type="pcre2">(?i)(0x1010|0x1038|0x1410|0x143a|0x1fffff)</field>
+    <description>Process opened a memory-read handle into lsass.exe — possible credential dumping.</description>
+    <mitre>
+      <id>T1003.001</id>
+    </mitre>
+  </rule>
+
+  <rule id="100041" level="0">
+    <if_sid>100040</if_sid>
+    <field name="win.eventdata.sourceImage" type="pcre2">(?i)(\\MsMpEng\.exe$|\\wmiprvse\.exe$)</field>
+    <description>LSASS access by a known-benign source image — suppressed.</description>
+  </rule>
+
+  <rule id="100042" level="14">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.image" type="pcre2">(?i)rundll32\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)comsvcs\.dll.*minidump</field>
+    <description>rundll32.exe invoking comsvcs.dll MiniDump — known LSASS-dumping LOLBin technique.</description>
+    <mitre>
+      <id>T1003.001</id>
+    </mitre>
+  </rule>
+
+</group>
+
+<group name="local,windows,lateral_movement,">
+
+  <rule id="100050" level="6">
+    <if_group>windows</if_group>
+    <field name="win.system.eventID">^4624$</field>
+    <field name="win.eventdata.logonType">^10$</field>
+    <description>Successful RDP (RemoteInteractive) logon.</description>
+    <mitre>
+      <id>T1021.001</id>
+    </mitre>
+  </rule>
+
+  <rule id="100051" level="11">
+    <if_sid>100050</if_sid>
+    <time>22:00 - 06:00</time>
+    <description>Successful RDP logon outside business hours (22:00-06:00).</description>
+    <mitre>
+      <id>T1021.001</id>
+    </mitre>
+  </rule>
+
+  <rule id="100052" level="8">
+    <if_group>windows</if_group>
+    <field name="win.system.eventID">^4625$</field>
+    <field name="win.eventdata.logonType">^10$</field>
+    <description>Failed RDP (RemoteInteractive) logon attempt.</description>
+    <mitre>
+      <id>T1021.001</id>
+    </mitre>
+  </rule>
+
+</group>
+
+<group name="local,correlation,">
+
+  <rule id="100060" level="15" frequency="2" timeframe="600">
+    <if_matched_group>local</if_matched_group>
+    <same_agent />
+    <different_id />
+    <description>Multiple distinct technique rules fired on the same host within 10 minutes — possible attack chain.</description>
+  </rule>
+
+</group>
