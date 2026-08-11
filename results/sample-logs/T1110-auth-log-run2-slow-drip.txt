@@ -1,0 +1,17 @@
+# Illustrative excerpt (sanitized/synthetic), not real credentials or IPs from any system.
+# Run 2: slow drip, 1 attempt every 30s, 15 attempts over 7.5 minutes -- deliberately outside the rule's 120s timeframe.
+Aug  4 02:30:00 victim sshd[2000]: Failed password for labadmin from 192.168.56.30 port 51500 ssh2
+Aug  4 02:30:30 victim sshd[2001]: Failed password for labadmin from 192.168.56.30 port 51501 ssh2
+Aug  4 02:31:00 victim sshd[2002]: Failed password for labadmin from 192.168.56.30 port 51502 ssh2
+Aug  4 02:31:30 victim sshd[2003]: Failed password for labadmin from 192.168.56.30 port 51503 ssh2
+Aug  4 02:32:00 victim sshd[2004]: Failed password for labadmin from 192.168.56.30 port 51504 ssh2
+Aug  4 02:32:30 victim sshd[2005]: Failed password for labadmin from 192.168.56.30 port 51505 ssh2
+Aug  4 02:33:00 victim sshd[2006]: Failed password for labadmin from 192.168.56.30 port 51506 ssh2
+Aug  4 02:33:30 victim sshd[2007]: Failed password for labadmin from 192.168.56.30 port 51507 ssh2
+Aug  4 02:34:00 victim sshd[2008]: Failed password for labadmin from 192.168.56.30 port 51508 ssh2
+Aug  4 02:34:30 victim sshd[2009]: Failed password for labadmin from 192.168.56.30 port 51509 ssh2
+Aug  4 02:35:00 victim sshd[2010]: Failed password for labadmin from 192.168.56.30 port 51510 ssh2
+Aug  4 02:35:30 victim sshd[2011]: Failed password for labadmin from 192.168.56.30 port 51511 ssh2
+Aug  4 02:36:00 victim sshd[2012]: Failed password for labadmin from 192.168.56.30 port 51512 ssh2
+Aug  4 02:36:30 victim sshd[2013]: Failed password for labadmin from 192.168.56.30 port 51513 ssh2
+Aug  4 02:37:00 victim sshd[2014]: Failed password for labadmin from 192.168.56.30 port 51514 ssh2
