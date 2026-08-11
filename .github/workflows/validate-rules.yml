@@ -4,9 +4,13 @@ on:
   push:
     paths:
       - "rules/**"
+      - "results/**"
+      - "scripts/**"
   pull_request:
     paths:
       - "rules/**"
+      - "results/**"
+      - "scripts/**"
 
 jobs:
   xml-lint:
@@ -17,3 +21,19 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libxml2-utils
       - name: Run rule validation script
         run: bash scripts/validate-rules.sh
+
+  rule-logic-simulation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run T1110 rule-logic simulator unit tests
+        run: python3 scripts/test_simulate_rule_match.py -v
+      - name: Simulate T1110 against both sample logs (informational output)
+        run: |
+          python3 scripts/simulate_rule_match.py results/sample-logs/T1110-auth-log-excerpt.txt
+          echo "---"
+          python3 scripts/simulate_rule_match.py results/sample-logs/T1110-auth-log-run2-slow-drip.txt

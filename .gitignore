@@ -2,6 +2,10 @@
 .DS_Store
 Thumbs.db
 
+# Python
+__pycache__/
+*.pyc
+
 # Logs / captured data (may contain lab-generated sensitive-looking data)
 *.log
 /results/raw/

@@ -5,14 +5,18 @@ detection engineering: simulate real attack techniques with **Atomic Red
 Team**, ingest telemetry into a **Wazuh** SIEM, and write detection rules
 mapped to **MITRE ATT&CK**.
 
-> **Status: build complete, execution pending.** All rules, install
-> scripts, VM provisioning (Vagrantfile), and docs are written and the
-> rule XML is validated (`scripts/validate-rules.sh`, wired into CI). What
-> hasn't happened yet is running it on real VMs — the results in
-> `results/*.md` describe expected outcomes based on how each rule and log
-> source actually works, not verified live test evidence. See
+> **Status: build complete, live execution pending.** All rules, install
+> scripts, VM provisioning (Vagrantfile), and docs are written; the rule
+> XML is validated (`scripts/validate-rules.sh`, wired into CI). For T1110
+> (SSH brute force), the rule's matching logic is also verified by
+> computation against real log timestamps (`scripts/simulate_rule_match.py`,
+> also in CI) rather than hand-traced — see
+> [results/T1110-results.md](results/T1110-results.md). The other 4
+> techniques' results are still hand-traced from how the rule and log
+> source work, not simulated or observed. No technique has run against a
+> live Wazuh agent yet. See
 > [docs/17-deploying-this-repo.md](docs/17-deploying-this-repo.md) to run
-> it and replace expected results with real ones.
+> it and replace expected/simulated results with real ones.
 
 ## Contents
 
