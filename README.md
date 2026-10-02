@@ -10,7 +10,7 @@ mapped to **MITRE ATT&CK**.
 > XML is validated (`scripts/validate-rules.sh`, wired into CI). For T1110
 > (SSH brute force), the rule's matching logic is also verified by
 > computation against real log timestamps (`scripts/simulate_rule_match.py`,
-> also in CI) rather than hand-traced — see
+> also in CI) rather than hand-traced see
 > [results/T1110-results.md](results/T1110-results.md). The other 4
 > techniques' results are still hand-traced from how the rule and log
 > source work, not simulated or observed. No technique has run against a
@@ -37,7 +37,7 @@ Stand up a small, realistic SOC pipeline end-to-end:
 4. Write and tune detection rules for each technique.
 5. Document what was caught, what was missed, and why.
 
-The point isn't the tools — it's the detection engineering loop:
+The point isn't the tools - it's the detection engineering loop:
 **simulate → observe → write rule → test → tune → document.**
 
 ## Repo structure
@@ -77,6 +77,6 @@ Full results table with pass/fail detail: [docs/05-detection-summary-table.md](d
 
 This is a lab, not a production SOC. See
 [docs/06-limitations.md](docs/06-limitations.md) for what these rules do
-*not* catch — slow/low brute force, LOLBin evasion of command-line rules,
+*not* catch slow/low brute force, LOLBin evasion of command-line rules,
 missing audit-policy prerequisites, no network-layer detection, and no
 cross-technique correlation.
