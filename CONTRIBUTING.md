@@ -9,6 +9,6 @@ welcome, especially:
 - Additional evasions worth documenting in `docs/06-limitations.md`
 
 Please keep the same format for any new technique: describe the atomic
-used, what log source lit up, the rule, and the test result — including
+used, what log source lit up, the rule, and the test result including
 negative/partial results. Rounding a partial pass up to a full pass isn't
 useful to anyone reading this as a learning resource.
